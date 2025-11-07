@@ -1,18 +1,30 @@
 package model;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 
-public class CustomerStat implements Serializable {
-    private String idCustomer;
-    private String name;
-    private String revenue;
+public class CustomerStat {
+    private String customerId;
+    private String customerName;
+    private BigDecimal revenue;
+    private int numberOfInvoices;
 
+    // Constructors
     public CustomerStat() {}
 
-    public String getIdCustomer() { return idCustomer; }
-    public void setIdCustomer(String idCustomer) { this.idCustomer = idCustomer; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public String getRevenue() { return revenue; }
-    public void setRevenue(String revenue) { this.revenue = revenue; }
+    public CustomerStat(String customerId, String customerName, BigDecimal revenue, int numberOfInvoices) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.revenue = revenue;
+        this.numberOfInvoices = numberOfInvoices;
+    }
+
+    // Getters & Setters
+    public String getCustomerId() { return customerId; }
+    public void setCustomerId(String customerId) { this.customerId = customerId; }
+    public String getCustomerName() { return customerName; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
+    public BigDecimal getRevenue() { return revenue; }
+    public void setRevenue(BigDecimal revenue) { this.revenue = revenue; }
+    public int getNumberOfInvoices() { return numberOfInvoices; }
+    public void setNumberOfInvoices(int numberOfInvoices) { this.numberOfInvoices = numberOfInvoices; }
 }

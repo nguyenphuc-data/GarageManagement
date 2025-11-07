@@ -1,22 +1,94 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Chọn loại thống kê</title>
+    <meta charset="UTF-8">
+    <title>Select Statistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h2 { color: #333; }
-        ul { list-style-type: none; padding: 0; }
-        li { margin: 15px 0; }
-        a { text-decoration: none; color: #007BFF; font-size: 18px; }
-        a:hover { text-decoration: underline; }
+        :root {
+            --primary: #4a5568;
+            --primary-dark: #2d3748;
+            --light: #f8f9fc;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f9fc 0%, #e2e8f0 100%);
+            padding: 40px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .card h1 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        .btn-block {
+            display: block;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .btn-block:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(74,85,104,0.15);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--light);
+            border-color: var(--primary);
+            color: var(--primary-dark);
+        }
     </style>
 </head>
 <body>
-    <h2>Chọn loại thống kê</h2>
-    <ul>
-        <li><a href="${pageContext.request.contextPath}/StaffViewStatistics/ifViewCustomerStatistics.jsp">Thống kê doanh thu khách hàng</a></li>
-    </ul>
-    <br>
-    <a href="${pageContext.request.contextPath}/Login/ifMainManagementStaff.jsp">Quay lại</a>
+<div class="card">
+    <h1>Select Statistics</h1>
+    <a href="${pageContext.request.contextPath}/customerstat" class="btn-block">
+        Customer Revenue Statistics
+    </a>
+    <a href="${pageContext.request.contextPath}/Login/ifMainManagementStaff.jsp" class="back-btn">
+        ← Back to Main Interface
+    </a>
+</div>
 </body>
 </html>

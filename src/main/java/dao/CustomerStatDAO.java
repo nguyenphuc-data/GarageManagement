@@ -3,34 +3,43 @@ package dao;
 import model.CustomerStat;
 import util.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.math.BigDecimal;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerStatDAO {
-    private static final String GET_CUSTOMER_REVENUE =
-            "SELECT c.idCustomer, m.name, SUM(pi.totalamount) as revenue " +
-                    "FROM customer c " +
-                    "JOIN member m ON c.member_id = m.id " +
-                    "JOIN paymentinvoice pi ON pi.customerid = c.idCustomer " +
-                    "WHERE pi.time BETWEEN ? AND ? AND pi.status = 'Paid' " +
-                    "GROUP BY c.idCustomer, m.name";
 
-    public List<CustomerStat> getCustomerRevenue(String startDate, String endDate) {
+    public List<CustomerStat> getCustomerRevenue(Date startDate, Date endDate) {
         List<CustomerStat> stats = new ArrayList<>();
+        String sql = """
+            SELECT 
+                c.member_id AS customerId,
+                m.name AS customerName,
+                COALESCE(SUM(pi.totalamount), 0) AS revenue,
+                COUNT(pi.id) AS invoiceCount
+            FROM customer c
+            JOIN member m ON c.member_id = m.id
+            LEFT JOIN receivingslip rs ON rs.customermemberid = c.member_id
+            LEFT JOIN paymentinvoice pi ON pi.receivingslipid = rs.id
+            WHERE pi.time BETWEEN ? AND ?
+            GROUP BY c.member_id, m.name
+            ORDER BY revenue DESC
+            """;
+
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(GET_CUSTOMER_REVENUE)) {
-            ps.setString(1, startDate + " 00:00:00");
-            ps.setString(2, endDate + " 23:59:59");
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setDate(1, new java.sql.Date(startDate.getTime()));
+            ps.setDate(2, new java.sql.Date(endDate.getTime()));
             ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
                 CustomerStat stat = new CustomerStat();
-                stat.setIdCustomer(rs.getString("idCustomer"));
-                stat.setName(rs.getString("name"));
-                stat.setRevenue(rs.getString("revenue"));
+                stat.setCustomerId(rs.getString("customerId"));
+                stat.setCustomerName(rs.getString("customerName"));
+                stat.setRevenue(rs.getBigDecimal("revenue"));
+                stat.setNumberOfInvoices(rs.getInt("invoiceCount"));
                 stats.add(stat);
             }
         } catch (SQLException e) {

@@ -1,57 +1,44 @@
 package controller;
 
-import dao.CustomerStatDAO;
 import dao.PaymentInvoiceDAO;
-import model.CustomerStat;
 import model.PaymentInvoice;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 import java.io.IOException;
-import java.util.List;
+import java.sql.Date;
 
-@WebServlet(name = "PaymentInvoiceController", urlPatterns = {"/PaymentInvoiceController"})
+@WebServlet("/paymentinvoice")
 public class PaymentInvoiceController extends HttpServlet {
-    private final PaymentInvoiceDAO paymentInvoiceDAO = new PaymentInvoiceDAO();
-    private final CustomerStatDAO customerStatDAO = new CustomerStatDAO();
+    private final PaymentInvoiceDAO dao = new PaymentInvoiceDAO();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idCustomer = request.getParameter("idCustomer");
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-        String id = request.getParameter("id");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-        if (idCustomer != null && startDate != null && endDate != null) {
-            List<PaymentInvoice> invoices = paymentInvoiceDAO.getPaidPaymentInvoiceList(idCustomer, startDate, endDate);
-            long totalRevenue = invoices.stream()
-                    .mapToLong(invoice -> Long.parseLong(invoice.getTotalAmount().replace(",", "")))
-                    .sum();
-            List<CustomerStat> customerStats = customerStatDAO.getCustomerRevenue(startDate, endDate);
-            String customerName = customerStats.stream()
-                    .filter(stat -> stat.getIdCustomer().equals(idCustomer))
-                    .findFirst()
-                    .map(CustomerStat::getName)
-                    .orElse("[Không tìm thấy tên]");
-            request.setAttribute("invoices", invoices);
-            request.setAttribute("customerName", customerName);
-            request.setAttribute("totalRevenue", String.format("%,d", totalRevenue));
-            request.getRequestDispatcher("/StaffViewStatistics/ifViewCustomerInvoices.jsp").forward(request, response);
-        } else if (id != null) {
-            System.out.println("Fetching invoice detail for id: " + id); // Debug log
-            PaymentInvoice invoice = paymentInvoiceDAO.getPaymentInvoiceDetail(id);
-            if (invoice != null && "Paid".equals(invoice.getStatus())) {
-                request.setAttribute("invoice", invoice);
-                request.getRequestDispatcher("/StaffViewStatistics/ifInvoiceDetail.jsp").forward(request, response);
-            } else {
-                request.setAttribute("invoice", null);
-                request.getRequestDispatcher("/StaffViewStatistics/ifInvoiceDetail.jsp").forward(request, response);
-            }
-        } else {
-            response.sendRedirect("/StaffViewStatistics/ifViewCustomerStatistics.jsp");
+        String action = req.getParameter("action");
+
+        if ("viewInvoices".equals(action)) {
+            String customerId = req.getParameter("customerId");
+            String customerName = req.getParameter("customerName"); // ← LẤY TÊN TỪ LINK
+            Date start = Date.valueOf(req.getParameter("start"));
+            Date end = Date.valueOf(req.getParameter("end"));
+
+            // TRUYỀN TÊN KHÁCH TRƯỚC KHI FORWARD!
+            req.setAttribute("customerName", customerName);
+            req.setAttribute("invoices", dao.getPaymentInvoiceList(customerId, start, end));
+            req.setAttribute("customerId", customerId);
+            req.setAttribute("start", req.getParameter("start"));
+            req.setAttribute("end", req.getParameter("end"));
+
+            // BÂY GIỜ MỚI FORWARD
+            req.getRequestDispatcher("/StaffViewStatistics/ifViewCustomerInvoices.jsp").forward(req, resp);
+
+        } else if ("viewDetail".equals(action)) {
+            String invoiceId = req.getParameter("invoiceId");
+            PaymentInvoice inv = dao.getPaymentInvoiceDetail(invoiceId);
+            req.setAttribute("invoice", inv);
+            req.getRequestDispatcher("/StaffViewStatistics/ifInvoiceDetail.jsp").forward(req, resp);
         }
     }
 }

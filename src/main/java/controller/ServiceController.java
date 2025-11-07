@@ -12,26 +12,35 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ServiceController", urlPatterns = "/searchService")
+@WebServlet("/service")
 public class ServiceController extends HttpServlet {
     private final ServiceDAO serviceDAO = new ServiceDAO();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String keyword = request.getParameter("keyword");
-        String id = request.getParameter("id");
 
-        if (keyword != null && !keyword.isEmpty()) {
-            List<Service> serviceList = serviceDAO.getServiceList(keyword);
-            request.setAttribute("serviceList", serviceList);
-            request.getRequestDispatcher("/SearchService/ifSearchService.jsp").forward(request, response);
-        } else if (id != null && !id.isEmpty()) {
+        String id = req.getParameter("id");
+        String keyword = req.getParameter("keyword");
+
+        // 1. Xem chi tiết
+        if (id != null && !id.trim().isEmpty()) {
             Service service = serviceDAO.getServiceDetail(id);
-            request.setAttribute("service", service);
-            request.getRequestDispatcher("/SearchService/ifDetailService.jsp").forward(request, response);
-        } else {
-            response.sendRedirect(request.getContextPath() + "/SearchService/ifSearchService.jsp");
+            req.setAttribute("service", service);
+            req.setAttribute("keyword", keyword != null ? keyword : "");
+            req.getRequestDispatcher("/SearchService/ifDetailService.jsp").forward(req, resp);
+            return;
         }
+
+        // 2. TÌM KIẾM HOẶC HIỂN THỊ TẤT CẢ
+        // QUAN TRỌNG: Luôn gán keyword = "" nếu null
+        if (keyword == null || keyword.trim().isEmpty()) {
+            keyword = "";  // Hiển thị tất cả
+        }
+
+        List<Service> list = serviceDAO.getServiceList(keyword); // GỌI DAO LUÔN
+        req.setAttribute("serviceList", list);
+        req.setAttribute("keyword", keyword);
+        req.getRequestDispatcher("/SearchService/ifSearchService.jsp").forward(req, resp);
     }
 }

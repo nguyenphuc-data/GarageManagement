@@ -1,51 +1,59 @@
-<!-- src/main/webapp/SearchSparePart/ifSearchSparePart.jsp -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Tìm kiếm linh kiện</title>
+    <meta charset="UTF-8">
+    <title>Spare Parts Catalog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .search-box { margin-bottom: 20px; }
-        input[type="text"] { padding: 8px; width: 300px; }
-        input[type="submit"] { padding: 8px 15px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .detail-link { color: blue; text-decoration: underline; cursor: pointer; }
-        .stock { color: green; font-weight: bold; }
-        .outstock { color: red; font-weight: bold; }
+        body { font-family: 'Inter', sans-serif; background: #f4f5f7; padding: 20px; }
+        .wrap { max-width: 1100px; margin: auto; background: white; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,.1); padding: 32px; }
+        h2 { text-align: center; color: #1a202c; font-size: 1.9rem; }
+        .search { text-align: center; margin: 30px 0; }
+        input[type=text] { padding: 14px 20px; width: 500px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; }
+        input[type=submit] { padding: 14px 32px; background: #4a5568; color: white; border: none; border-radius: 12px; margin-left: 10px; font-weight: 600; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { background: #e2e8f0; padding: 16px; text-align: left; color: #4a5568; font-size: 0.9rem; text-transform: uppercase; }
+        td { padding: 16px; border-bottom: 1px solid #e2e8f0; }
+        .price { font-weight: 600; color: #2f855a; }
+        .qty { color: #3182ce; font-weight: 500; }
+        .link { color: #4a5568; text-decoration: none; font-weight: 600; }
+        .link:hover { text-decoration: underline; }
+        .no { text-align: center; padding: 30px; background: #fff5f5; color: #e53e3e; border-radius: 12px; }
     </style>
 </head>
 <body>
-    <h2>Tìm kiếm linh kiện</h2>
-    <div class="search-box">
-        <form action="${pageContext.request.contextPath}/searchSparePart" method="get">
-            <input type="text" name="keyword" placeholder="Nhập tên linh kiện..."
-                   value="${param.keyword != null ? param.keyword : ''}" required>
-            <input type="submit" value="Tìm kiếm">
+<div class="wrap">
+    <h2>Spare Parts Catalog</h2>
+    <div class="search">
+        <form action="${pageContext.request.contextPath}/sparepart" method="get">
+            <input type="text" name="keyword" placeholder="Search spare part..." value="${keyword}">
+            <input type="submit" value="Search">
         </form>
     </div>
     <c:if test="${not empty sparePartList}">
-        <h3>Kết quả tìm kiếm cho: "${param.keyword}"</h3>
         <table>
-            <tr><th>Mã linh kiện</th><th>Tên linh kiện</th><th>Giá</th><th>Số lượng tồn</th><th>Mô tả</th><th>Xem chi tiết</th></tr>
-            <c:forEach var="part" items="${sparePartList}">
+            <tr><th>ID</th><th>Name</th><th>Price</th><th>Stock</th><th>Action</th></tr>
+            <c:forEach var="p" items="${sparePartList}">
                 <tr>
-                    <td>${part.id}</td>
-                    <td>${part.name}</td>
-                    <td>${part.price} VNĐ</td>
-                    <td><c:choose><c:when test="${part.quantity > 0}"><span class="stock">${part.quantity}</span></c:when><c:otherwise><span class="outstock">Hết hàng</span></c:otherwise></c:choose></td>
-                    <td>${part.desc}</td>
-                    <td><a href="${pageContext.request.contextPath}/searchSparePart?id=${part.id}" class="detail-link">Xem chi tiết</a></td>
+                    <td>${p.id}</td>
+                    <td>${p.name}</td>
+                    <td class="price"><fmt:formatNumber value="${p.price}" pattern="#"/> VND</td>
+                    <td class="qty">${p.quantity} pcs</td>
+                    <td><a href="${pageContext.request.contextPath}/sparepart?id=${p.id}&keyword=${keyword}" class="link">View Details</a></td>
                 </tr>
             </c:forEach>
         </table>
     </c:if>
-    <c:if test="${empty sparePartList && param.keyword != null}">
-        <p>Không tìm thấy linh kiện nào phù hợp với từ khóa: "${param.keyword}"</p>
+    <c:if test="${empty sparePartList && not empty keyword}">
+        <p class="no">No spare parts found for "${keyword}"</p>
     </c:if>
-    <br>
-    <a href="${pageContext.request.contextPath}/Login/ifCustomerHome.jsp">Quay lại trang chủ khách hàng</a>
+    <p style="text-align:center; margin-top:40px;">
+        <a href="${pageContext.request.contextPath}/Login/ifCustomerHome.jsp" style="color:#4a5568; font-weight:500;">Back to Home</a>
+    </p>
+</div>
 </body>
 </html>

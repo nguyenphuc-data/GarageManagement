@@ -1,82 +1,88 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Chi tiết hóa đơn</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice #${invoice.id}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; margin: 30px; }
-        .detail-box { border: 1px solid #ddd; padding: 20px; border-radius: 8px; max-width: 800px; }
-        .label { font-weight: bold; }
-        .section { margin-bottom: 15px; }
-        .back-link { margin-top: 20px; display: inline-block; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ccc; padding: 5px; text-align: left; }
-        th { background-color: #f2f2f2; }
+        body { font-family: 'Inter', sans-serif; background: #f8f9fc; padding: 20px; margin: 0; }
+        .box { max-width: 900px; margin: 40px auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,.1); }
+        h1 { text-align: center; color: #1a202c; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        .item { background: #f0fff4; padding: 16px; border-radius: 12px; font-size: 15px; }
+        .item strong { color: #065f46; }
+        h2 { color: #1a202c; margin-top: 30px; font-size: 20px; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 8px 0; font-size: 15px; }
+        .total {
+            font-size: 2rem; font-weight: 700; text-align: center;
+            padding: 25px; background: #ecfdf5; border-radius: 12px;
+            color: #065f46; margin: 30px 0;
+        }
+        .btn {
+            display: block; width: 200px; margin: 30px auto 20px;
+            padding: 14px 32px; background: #4a5568; color: white;
+            border: none; border-radius: 12px; cursor: pointer;
+            font-size: 16px; text-align: center; text-decoration: none;
+        }
+        .btn:hover { background: #2d3748; }
+        .back { text-align: center; }
+        .back a { color: #4a5568; font-weight: 600; text-decoration: none; }
+        .back a:hover { text-decoration: underline; }
+        @media print {
+            body { background: white; padding: 0; }
+            .btn, .back { display: none; }
+        }
     </style>
 </head>
 <body>
-    <h2>Chi tiết hóa đơn</h2>
-    <c:if test="${not empty invoice}">
-        <div class="detail-box">
-            <div class="section">
-                <h3>Thông tin hóa đơn</h3>
-                <p><span class="label">Mã hóa đơn:</span> ${invoice.id}</p>
-                <p><span class="label">Thời gian:</span> ${invoice.time}</p>
-                <p><span class="label">Tổng tiền:</span> ${invoice.totalAmount} VNĐ</p>
-                <p><span class="label">Trạng thái:</span> ${invoice.status}</p>
-            </div>
-            <div class="section">
-                <h3>Thông tin khách hàng</h3>
-                <p><span class="label">Mã khách hàng:</span> ${invoice.customerId}</p>
-                <p><span class="label">Tên khách hàng:</span> ${invoice.customerName}</p>
-            </div>
-            <div class="section">
-                <h3>Thông tin xe</h3>
-                <p><span class="label">Mã xe:</span> ${invoice.vehicleId}</p>
-                <p><span class="label">Biển số:</span> ${invoice.vehicleLicensePlate}</p>
-                <p><span class="label">Mô tả:</span> ${invoice.vehicleDescription}</p>
-            </div>
-            <div class="section">
-                <h3>Thông tin nhân viên</h3>
-                <p><span class="label">Mã nhân viên:</span> ${invoice.staffId}</p>
-                <p><span class="label">Tên nhân viên:</span> ${invoice.staffName}</p>
-            </div>
-            <div class="section">
-                <h3>Dịch vụ</h3>
-                <table>
-                    <tr><th>Mã dịch vụ</th><th>Tên dịch vụ</th><th>Số lượng</th><th>Thành tiền</th><th>Nhân viên kỹ thuật</th></tr>
-                    <c:forEach var="service" items="${invoice.serviceDetails}">
-                        <tr>
-                            <td>${service.id}</td>
-                            <td>${service.name}</td>
-                            <td>${service.quantity}</td>
-                            <td>${service.totalAmount} VNĐ</td>
-                            <td>${service.technicalStaffId}</td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </div>
-            <div class="section">
-                <h3>Linh kiện</h3>
-                <table>
-                    <tr><th>Mã linh kiện</th><th>Tên linh kiện</th><th>Số lượng</th><th>Thành tiền</th></tr>
-                    <c:forEach var="sparePart" items="${invoice.sparePartDetails}">
-                        <tr>
-                            <td>${sparePart.id}</td>
-                            <td>${sparePart.name}</td>
-                            <td>${sparePart.quantity}</td>
-                            <td>${sparePart.totalAmount} VNĐ</td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </div>
+<div class="box">
+    <h1>INVOICE #${invoice.id}</h1>
+
+    <div class="grid">
+        <div class="item"><strong>Customer:</strong> ${invoice.customerName}</div>
+        <div class="item"><strong>Staff:</strong> ${invoice.staffName}</div>
+        <div class="item"><strong>Vehicle:</strong> ${invoice.licensePlate}</div>
+        <div class="item">
+            <strong>Date:</strong>
+            <fmt:parseDate value="${invoice.time}" pattern="yyyy-MM-dd'T'HH:mm" var="invDate" type="both"/>
+            <fmt:formatDate value="${invDate}" pattern="dd/MM/yyyy HH:mm"/>
         </div>
-    </c:if>
-    <c:if test="${empty invoice}">
-        <p style="color: red;">Không tìm thấy thông tin hóa đơn.</p>
-    </c:if>
-    <div class="back-link">
-        <a href="${pageContext.request.contextPath}/StaffViewStatistics/ifViewCustomerInvoices.jsp?idCustomer=${param.idCustomer}&startDate=${param.startDate}&endDate=${param.endDate}">Quay lại</a>
     </div>
+
+    <c:if test="${not empty invoice.services}">
+        <h2>Services</h2>
+        <ul>
+            <c:forEach var="s" items="${invoice.services}">
+                <li>${s.name} × ${s.quantity} = <fmt:formatNumber value="${s.total}" pattern="#,##0"/> VND</li>
+            </c:forEach>
+        </ul>
+    </c:if>
+
+    <c:if test="${not empty invoice.spareparts}">
+        <h2>Spare Parts</h2>
+        <ul>
+            <c:forEach var="p" items="${invoice.spareparts}">
+                <li>${p.name} × ${p.quantity} = <fmt:formatNumber value="${p.total}" pattern="#,##0"/> VND</li>
+            </c:forEach>
+        </ul>
+    </c:if>
+
+    <div class="total">
+        TOTAL: <fmt:formatNumber value="${invoice.totalamount}" pattern="#,##0"/> VND
+    </div>
+
+    <div style="text-align:center;">
+        <button class="btn" onclick="window.print()">Print Invoice</button>
+    </div>
+
+    <div class="back">
+        <a href="javascript:history.back()">← Back to List</a>
+    </div>
+</div>
 </body>
 </html>
