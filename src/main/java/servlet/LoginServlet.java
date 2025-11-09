@@ -16,7 +16,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     private static final String LOGIN_PAGE = "/Login/login.jsp";
-    private static final String CUSTOMER_HOME = "/Login/ifCustomerHome.jsp";
+    private static final String CUSTOMER_HOME = "/Login/ifMainCustomer.jsp";
     private static final String STAFF_HOME = "/Login/ifMainManagementStaff.jsp";
 
     @Override

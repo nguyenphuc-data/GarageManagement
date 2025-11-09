@@ -50,7 +50,7 @@
         <p class="no">No services found for "${keyword}"</p>
     </c:if>
     <p style="text-align:center; margin-top:40px;">
-        <a href="${pageContext.request.contextPath}/Login/ifCustomerHome.jsp" style="color:#4a5568; font-weight:500;">Back to Home</a>
+        <a href="${pageContext.request.contextPath}/Login/ifMainCustomer.jsp" style="color:#4a5568; font-weight:500;">Back to Home</a>
     </p>
 </div>
 </body>

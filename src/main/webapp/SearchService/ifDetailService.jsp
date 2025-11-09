@@ -35,7 +35,7 @@
     </c:choose>
     <p class="back" style="text-align:center; margin-top:40px;">
         <a href="${pageContext.request.contextPath}/service?keyword=${keyword}">Back to List</a> |
-        <a href="${pageContext.request.contextPath}/Login/ifCustomerHome.jsp">Home</a>
+        <a href="${pageContext.request.contextPath}/Login/ifMainCustomer.jsp">Home</a>
     </p>
 </div>
 </body>
