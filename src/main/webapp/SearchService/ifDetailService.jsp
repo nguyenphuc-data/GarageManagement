@@ -29,7 +29,7 @@
             <div class="row"><span class="label">ID:</span><span class="value">${service.id}</span></div>
             <div class="row"><span class="label">Name:</span><span class="value">${service.name}</span></div>
             <div class="row"><span class="label">Price:</span><span class="value price"><fmt:formatNumber value="${service.price}" pattern="#,##0"/> VND</span></div>
-            <div class="row" style="border:none;"><span class="label">Desc:</span><span class="value">${service.desc}</span></div>
+            <div class="row" style="border:none;"><span class="label">Description:</span><span class="value">${service.desc}</span></div>
         </c:when>
         <c:otherwise><p class="notfound">Service not found!</p></c:otherwise>
     </c:choose>

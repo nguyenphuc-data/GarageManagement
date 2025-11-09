@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SparePartDAO {
-    private static final String SELECT_BY_KEYWORD = "SELECT * FROM sparepart WHERE name LIKE ?";
+    private static final String SELECT_BY_KEYWORD =
+            "SELECT * FROM sparepart WHERE name LIKE ? ORDER BY CAST(SUBSTRING(id, 3) AS UNSIGNED)";
     private static final String SELECT_BY_ID = "SELECT * FROM sparepart WHERE id = ?";
 
     public List<SparePart> getSparePartList(String keyword) {
@@ -23,7 +24,7 @@ public class SparePartDAO {
                 SparePart p = new SparePart();
                 p.setId(rs.getString("id"));
                 p.setName(rs.getString("name"));
-                p.setPrice(rs.getBigDecimal("price"));           // ← BigDecimal
+                p.setPrice(rs.getBigDecimal("price"));
                 p.setQuantity(rs.getInt("quantity"));
                 p.setDesc(rs.getString("description"));
                 parts.add(p);
@@ -45,7 +46,7 @@ public class SparePartDAO {
                 part = new SparePart();
                 part.setId(rs.getString("id"));
                 part.setName(rs.getString("name"));
-                part.setPrice(rs.getBigDecimal("price"));       // ← BigDecimal
+                part.setPrice(rs.getBigDecimal("price"));
                 part.setQuantity(rs.getInt("quantity"));
                 part.setDesc(rs.getString("description"));
             }

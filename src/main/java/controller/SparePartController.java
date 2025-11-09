@@ -22,7 +22,6 @@ public class SparePartController extends HttpServlet {
         String id = req.getParameter("id");
         String keyword = req.getParameter("keyword");
 
-        // Xem chi tiết
         if (id != null && !id.trim().isEmpty()) {
             SparePart part = dao.getSparePartDetail(id);
             req.setAttribute("part", part);

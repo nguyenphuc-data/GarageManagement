@@ -36,7 +36,6 @@ public class PaymentInvoiceDAO {
         return list;
     }
 
-    // 1 HÀM DUY NHẤT – LẤY HẾT: INVOICE + NHÂN VIÊN + DỊCH VỤ + PHỤ TÙNG
     public PaymentInvoice getPaymentInvoiceDetail(String id) {
         PaymentInvoice inv = null;
         String sql = """

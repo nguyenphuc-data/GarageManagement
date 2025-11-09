@@ -16,7 +16,6 @@ public class PaymentInvoice implements Serializable {
     private String licensePlate;
     private String staffName;
 
-    // ĐÃ ĐỔI: ServiceItem → ServiceSlip
     public static class ServiceSlip {
         private String name;
         private int quantity;
@@ -30,7 +29,6 @@ public class PaymentInvoice implements Serializable {
         public void setTotal(BigDecimal total) { this.total = total; }
     }
 
-    // ĐÃ ĐỔI: SparePartItem → SparePartSlip
     public static class SparePartSlip {
         private String name;
         private int quantity;
@@ -47,7 +45,6 @@ public class PaymentInvoice implements Serializable {
     private List<ServiceSlip> services = new ArrayList<>();
     private List<SparePartSlip> spareparts = new ArrayList<>();
 
-    // GETTER / SETTER
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     public BigDecimal getTotalamount() { return totalamount; }

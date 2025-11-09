@@ -111,11 +111,29 @@
         .bottom {
             text-align:center;
         }
+        .period {
+            text-align:center;
+            color:#718096;
+            margin:10px 0 20px;
+            font-size:1rem;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Customer Revenue Statistics</h1>
+
+    <!-- HIỂN THỊ KHOẢNG THỜI GIAN ĐẸP -->
+    <c:if test="${not empty startDate}">
+        <p class="period">
+            <strong>Period:</strong>
+            <fmt:parseDate value="${startDate}" pattern="yyyy-MM-dd" var="s"/>
+            <fmt:formatDate value="${s}" pattern="dd/MM/yyyy"/>
+            →
+            <fmt:parseDate value="${endDate}" pattern="yyyy-MM-dd" var="e"/>
+            <fmt:formatDate value="${e}" pattern="dd/MM/yyyy"/>
+        </p>
+    </c:if>
 
     <!-- FORM -->
     <div class="form-box">
@@ -143,10 +161,9 @@
                 <tr>
                     <td><strong>${s.customerId}</strong></td>
                     <td>${s.customerName}</td>
-                    <td><fmt:formatNumber value="${s.revenue}" type="number"/> VND</td>
+                    <td><fmt:formatNumber value="${s.revenue}" pattern="#,##0"/> VND</td>
                     <td>${s.numberOfInvoices}</td>
                     <td>
-                        <!-- ĐÃ SỬA: 1 DÒNG LIÊN TỤC – KHÔNG XUỐNG DÒNG -->
                         <a href="${pageContext.request.contextPath}/paymentinvoice?action=viewInvoices&customerId=${s.customerId}&customerName=${s.customerName}&start=${startDate}&end=${endDate}" class="link">
                             View Invoices →
                         </a>
@@ -156,9 +173,8 @@
             </c:forEach>
         </table>
 
-        <!-- TOTAL REVENUE -->
         <div class="summary">
-            Total Revenue: <fmt:formatNumber value="${totalRevenue}" type="number"/> VND
+            Total Revenue: <fmt:formatNumber value="${totalRevenue}" pattern="#,##0"/> VND
         </div>
     </c:if>
 

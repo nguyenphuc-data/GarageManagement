@@ -1,4 +1,3 @@
-// src/main/java/controller/ServiceController.java
 package controller;
 
 import dao.ServiceDAO;
@@ -23,7 +22,6 @@ public class ServiceController extends HttpServlet {
         String id = req.getParameter("id");
         String keyword = req.getParameter("keyword");
 
-        // 1. Xem chi tiết
         if (id != null && !id.trim().isEmpty()) {
             Service service = serviceDAO.getServiceDetail(id);
             req.setAttribute("service", service);
@@ -32,13 +30,12 @@ public class ServiceController extends HttpServlet {
             return;
         }
 
-        // 2. TÌM KIẾM HOẶC HIỂN THỊ TẤT CẢ
-        // QUAN TRỌNG: Luôn gán keyword = "" nếu null
+        //TÌM KIẾM HOẶC HIỂN THỊ TẤT CẢ
         if (keyword == null || keyword.trim().isEmpty()) {
             keyword = "";  // Hiển thị tất cả
         }
 
-        List<Service> list = serviceDAO.getServiceList(keyword); // GỌI DAO LUÔN
+        List<Service> list = serviceDAO.getServiceList(keyword);
         req.setAttribute("serviceList", list);
         req.setAttribute("keyword", keyword);
         req.getRequestDispatcher("/SearchService/ifSearchService.jsp").forward(req, resp);

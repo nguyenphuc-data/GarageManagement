@@ -29,9 +29,9 @@
         <c:when test="${not empty part}">
             <div class="row"><span class="label">ID:</span><span class="value">${part.id}</span></div>
             <div class="row"><span class="label">Name:</span><span class="value">${part.name}</span></div>
-            <div class="row"><span class="label">Price:</span><span class="value price"><fmt:formatNumber value="${part.price}" pattern="#"/> VND</span></div>
+            <div class="row"><span class="label">Price:</span><span class="value price"><fmt:formatNumber value="${part.price}" pattern="#,##0"/> VND</span></div>
             <div class="row"><span class="label">Stock:</span><span class="value qty">${part.quantity} pcs</span></div>
-            <div class="row" style="border:none;"><span class="label">Desc:</span><span class="value">${part.desc}</span></div>
+            <div class="row" style="border:none;"><span class="label">Description:</span><span class="value">${part.desc}</span></div>
         </c:when>
         <c:otherwise><p class="notfound">Part not found!</p></c:otherwise>
     </c:choose>

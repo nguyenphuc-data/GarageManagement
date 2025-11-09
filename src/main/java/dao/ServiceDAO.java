@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceDAO {
-    private static final String SELECT_BY_KEYWORD = "SELECT * FROM service WHERE name LIKE ?";
+    private static final String SELECT_BY_KEYWORD =
+            "SELECT * FROM service WHERE name LIKE ? ORDER BY CAST(SUBSTRING(id, 2) AS UNSIGNED)";
     private static final String SELECT_BY_ID = "SELECT * FROM service WHERE id = ?";
 
     public List<Service> getServiceList(String keyword) {
@@ -22,8 +23,8 @@ public class ServiceDAO {
                 Service s = new Service();
                 s.setId(rs.getString("id"));
                 s.setName(rs.getString("name"));
-                s.setPrice(rs.getBigDecimal("price"));           // ← BigDecimal
-                s.setDesc(rs.getString("description"));         // ← desc = DB.description
+                s.setPrice(rs.getBigDecimal("price"));
+                s.setDesc(rs.getString("description"));
                 services.add(s);
             }
         } catch (SQLException e) {
@@ -42,8 +43,8 @@ public class ServiceDAO {
                 Service s = new Service();
                 s.setId(rs.getString("id"));
                 s.setName(rs.getString("name"));
-                s.setPrice(rs.getBigDecimal("price"));           // ← BigDecimal
-                s.setDesc(rs.getString("description"));         // ← desc = DB.description
+                s.setPrice(rs.getBigDecimal("price"));
+                s.setDesc(rs.getString("description"));
                 return s;
             }
         } catch (SQLException e) {

@@ -41,7 +41,7 @@
                 <tr>
                     <td>${p.id}</td>
                     <td>${p.name}</td>
-                    <td class="price"><fmt:formatNumber value="${p.price}" pattern="#"/> VND</td>
+                    <td class="price"><fmt:formatNumber value="${p.price}" pattern="#,##0"/> VND</td>
                     <td class="qty">${p.quantity} pcs</td>
                     <td><a href="${pageContext.request.contextPath}/sparepart?id=${p.id}&keyword=${keyword}" class="link">View Details</a></td>
                 </tr>

@@ -24,14 +24,12 @@ public class PaymentInvoiceController extends HttpServlet {
             Date start = Date.valueOf(req.getParameter("start"));
             Date end = Date.valueOf(req.getParameter("end"));
 
-            // TRUYỀN TÊN KHÁCH TRƯỚC KHI FORWARD!
             req.setAttribute("customerName", customerName);
             req.setAttribute("invoices", dao.getPaymentInvoiceList(customerId, start, end));
             req.setAttribute("customerId", customerId);
             req.setAttribute("start", req.getParameter("start"));
             req.setAttribute("end", req.getParameter("end"));
 
-            // BÂY GIỜ MỚI FORWARD
             req.getRequestDispatcher("/StaffViewStatistics/ifViewCustomerInvoices.jsp").forward(req, resp);
 
         } else if ("viewDetail".equals(action)) {

@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 public class Service implements Serializable {
     private String id;
     private String name;
-    private BigDecimal price;  // ← DECIMAL(15,2) → BigDecimal
-    private String desc;       // ← GIỮ NGUYÊN desc
+    private BigDecimal price;
+    private String desc;
 
     public Service() {}
 
@@ -18,7 +18,6 @@ public class Service implements Serializable {
         this.desc = desc;
     }
 
-    // GETTER / SETTER
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     public String getName() { return name; }
@@ -27,9 +26,4 @@ public class Service implements Serializable {
     public void setPrice(BigDecimal price) { this.price = price; }
     public String getDesc() { return desc; }
     public void setDesc(String desc) { this.desc = desc; }
-
-    @Override
-    public String toString() {
-        return "Service{id='" + id + "', name='" + name + "', price=" + price + ", desc='" + desc + "'}";
-    }
 }

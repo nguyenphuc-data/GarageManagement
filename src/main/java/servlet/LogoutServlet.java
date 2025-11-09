@@ -16,18 +16,15 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        // Lấy session hiện tại (không tạo mới nếu chưa có)
         HttpSession session = req.getSession(false);
 
         if (session != null) {
             session.invalidate(); // XÓA TOÀN BỘ SESSION → LOGOUT THÀNH CÔNG
         }
 
-        // Redirect về trang login
         resp.sendRedirect(req.getContextPath() + "/Login/login.jsp");
     }
 
-    // (Tùy chọn) Hỗ trợ POST nếu cần chống CSRF sau này
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 public class SparePart implements Serializable {
     private String id;
     private String name;
-    private BigDecimal price;     // ← DECIMAL(15,2) → BigDecimal
+    private BigDecimal price;
     private Integer quantity;
     private String desc;
 
@@ -20,7 +20,6 @@ public class SparePart implements Serializable {
         this.desc = desc;
     }
 
-    // GETTER / SETTER
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -35,15 +34,4 @@ public class SparePart implements Serializable {
 
     public String getDesc() { return desc; }
     public void setDesc(String desc) { this.desc = desc; }
-
-    @Override
-    public String toString() {
-        return "SparePart{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", desc='" + desc + '\'' +
-                '}';
-    }
 }
