@@ -21,10 +21,12 @@ public class PaymentInvoiceController extends HttpServlet {
         if ("viewInvoices".equals(action)) {
             String customerId = req.getParameter("customerId");
             String customerName = req.getParameter("customerName"); // ← LẤY TÊN TỪ LINK
+            String revenue = req.getParameter("revenue");
             Date start = Date.valueOf(req.getParameter("start"));
             Date end = Date.valueOf(req.getParameter("end"));
 
             req.setAttribute("customerName", customerName);
+            req.setAttribute("revenue", revenue);
             req.setAttribute("invoices", dao.getPaymentInvoiceList(customerId, start, end));
             req.setAttribute("customerId", customerId);
             req.setAttribute("start", req.getParameter("start"));

@@ -30,7 +30,6 @@ public class ServiceController extends HttpServlet {
             return;
         }
 
-        //TÌM KIẾM HOẶC HIỂN THỊ TẤT CẢ
         if (keyword == null || keyword.trim().isEmpty()) {
             keyword = "";  // Hiển thị tất cả
         }

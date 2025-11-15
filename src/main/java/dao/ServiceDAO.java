@@ -9,8 +9,8 @@ import java.util.List;
 
 public class ServiceDAO {
     private static final String SELECT_BY_KEYWORD =
-            "SELECT * FROM service WHERE name LIKE ? ORDER BY CAST(SUBSTRING(id, 2) AS UNSIGNED)";
-    private static final String SELECT_BY_ID = "SELECT * FROM service WHERE id = ?";
+            "SELECT * FROM tblService WHERE name LIKE ? ORDER BY CAST(SUBSTRING(id, 2) AS UNSIGNED)";
+    private static final String SELECT_BY_ID = "SELECT * FROM tblService WHERE id = ?";
 
     public List<Service> getServiceList(String keyword) {
         List<Service> services = new ArrayList<>();

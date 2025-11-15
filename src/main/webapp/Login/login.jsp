@@ -142,7 +142,7 @@
         <!-- Logo -->
         <div class="logo">G</div>
 
-        <h1>Garage Web</h1>
+        <h1>Hanoi Garage</h1>
         <h2>Login to your account</h2>
 
         <!-- FORM ĐÚNG: action="/login" -->

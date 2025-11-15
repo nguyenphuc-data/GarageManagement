@@ -24,7 +24,12 @@
 </head>
 <body>
 <div class="card">
-    <h2>Spare Part Details</h2>
+    <h1 style="text-align:center; font-size:2.3rem; margin:20px 0 16px; font-weight:700; color:#1a202c; line-height:1.3;">
+                Find Spare Part Information
+    </h1>
+    <h2 style="text-align:center; font-size:1.8rem; font-weight:600; color:#718096; margin:0;">
+                Spare Part Detail
+    </h2>
     <c:choose>
         <c:when test="${not empty part}">
             <div class="row"><span class="label">ID:</span><span class="value">${part.id}</span></div>

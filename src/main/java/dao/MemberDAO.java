@@ -9,7 +9,7 @@ public class MemberDAO {
 
     public Member login(String username, String password) {
         Member member = null;
-        String sql = "SELECT * FROM member WHERE username=? AND password=?";
+        String sql = "SELECT * FROM tblMember WHERE username=? AND password=?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

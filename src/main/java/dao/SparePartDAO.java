@@ -10,8 +10,8 @@ import java.util.List;
 
 public class SparePartDAO {
     private static final String SELECT_BY_KEYWORD =
-            "SELECT * FROM sparepart WHERE name LIKE ? ORDER BY CAST(SUBSTRING(id, 3) AS UNSIGNED)";
-    private static final String SELECT_BY_ID = "SELECT * FROM sparepart WHERE id = ?";
+            "SELECT * FROM tblSparePart WHERE name LIKE ? ORDER BY CAST(SUBSTRING(id, 3) AS UNSIGNED)";
+    private static final String SELECT_BY_ID = "SELECT * FROM tblSparePart WHERE id = ?";
 
     public List<SparePart> getSparePartList(String keyword) {
         List<SparePart> parts = new ArrayList<>();

@@ -12,8 +12,20 @@
         .card h1{font-size:1.8rem;color:var(--primary-dark);margin-bottom:24px;font-weight:700}
         .btn-block{display:block;padding:16px;background:var(--primary);color:white;text-decoration:none;border-radius:12px;font-weight:600;margin:15px 0;transition:all .3s ease;cursor:pointer}
         .btn-block:hover{background:var(--primary-dark);transform:translateY(-2px);box-shadow:0 6px 18px rgba(74,85,104,0.15)}
-        .back-btn{display:inline-block;margin-top:10px;font-size:.95rem;color:var(--primary);text-decoration:none;font-weight:600;padding:10px 14px;border-radius:8px;border:1px solid var(--border);transition:all .3s ease}
-        .back-btn:hover{background:var(--light);border-color:var(--primary);color:var(--primary-dark)}
+        .back a {
+                    color: #4a5568;
+                    font-weight: 600;
+                    text-decoration: none;
+                    font-size: 15px;
+                }
+                .back a:hover {
+                    text-decoration: underline;
+                }
+
+                @media print {
+                    body { background: white; padding: 0; }
+                    .btn, .back { display: none; }
+                }
     </style>
 </head>
 <body>
@@ -38,9 +50,9 @@
     </div>
 
     <!-- NÚT BACK VẪN DÙNG href (VÌ KHÔNG QUA CONTROLLER) -->
-    <a href="${pageContext.request.contextPath}/Login/ifMainManagementStaff.jsp" class="back-btn">
-        Back to Main Interface
-    </a>
+    <div class="back">
+                    <a href="${pageContext.request.contextPath}/Login/ifMainManagementStaff.jsp">Back</a>
+            </div>
 </div>
 </body>
 </html>

@@ -17,13 +17,11 @@ public class CustomerStatController extends HttpServlet {
             throws ServletException, IOException {
         String action = req.getParameter("action");
 
-        // HIỂN THỊ FORM KHI BẤM LINK
         if ("showForm".equals(action)) {
             req.getRequestDispatcher("/StaffViewStatistics/ifViewCustomerStatistics.jsp").forward(req, resp);
             return;
         }
 
-        // XỬ LÝ KHI BẤM "Generate Report"
         String startStr = req.getParameter("startDate");
         String endStr = req.getParameter("endDate");
         Date start = Date.valueOf(startStr);
