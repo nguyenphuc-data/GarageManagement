@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+public class LoginController extends HttpServlet {
 
     private static final String LOGIN_PAGE = "/Login/login.jsp";
     private static final String CUSTOMER_HOME = "/Login/ifMainCustomer.jsp";
@@ -40,7 +40,6 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("member", member);
 
-                // Điều hướng dựa trên vai trò
                 String redirectUrl = "staff".equalsIgnoreCase(member.getRole()) ? STAFF_HOME : CUSTOMER_HOME;
                 response.sendRedirect(request.getContextPath() + redirectUrl);
             } else {

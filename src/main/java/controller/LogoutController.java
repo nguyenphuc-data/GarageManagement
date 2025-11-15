@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/logout")
-public class LogoutServlet extends HttpServlet {
+public class LogoutController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -19,7 +19,7 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
 
         if (session != null) {
-            session.invalidate(); // XÓA TOÀN BỘ SESSION → LOGOUT THÀNH CÔNG
+            session.invalidate();
         }
 
         resp.sendRedirect(req.getContextPath() + "/Login/login.jsp");
